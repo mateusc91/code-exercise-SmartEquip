@@ -1,7 +1,7 @@
 package com.example.codingexercisesmartequip.controller;
 
 import com.example.codingexercisesmartequip.model.request.AnswerRequest;
-import com.example.codingexercisesmartequip.model.response.AnswerResponseDTO;
+import com.example.codingexercisesmartequip.dto.AnswerResponseDTO;
 import com.example.codingexercisesmartequip.model.response.QuestionResponse;
 import com.example.codingexercisesmartequip.service.SumService;
 import io.swagger.v3.oas.annotations.Operation;

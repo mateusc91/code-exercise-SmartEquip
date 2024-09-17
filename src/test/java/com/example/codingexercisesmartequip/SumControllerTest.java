@@ -10,9 +10,11 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -39,16 +41,30 @@ class SumControllerTest {
     }
 
     @Test
-    void shouldReturnOkForCorrectSumAnswer() throws Exception {
-        QuestionResponse questionResponse = sumService.buildQuestion();
+    void shouldReturnOkForCorrectAnswer() throws Exception {
+        MvcResult result = mockMvc.perform(get("/"))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        String content = result.getResponse().getContentAsString();
+        QuestionResponse questionResponse = objectMapper.readValue(content, QuestionResponse.class);
         int correctSum = questionResponse.getNumbers().stream().mapToInt(Integer::intValue).sum();
-        AnswerRequest answerRequest = new AnswerRequest(questionResponse.getQuestionId(), questionResponse.getQuestion(), correctSum);
+
+        AnswerRequest answerRequest = new AnswerRequest(
+                questionResponse.getQuestionId(),
+                questionResponse.getQuestion(),
+                correctSum
+        );
 
         mockMvc.perform(post("/")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(answerRequest)))
                 .andExpect(status().isOk())
                 .andExpect(content().json("{\"message\":\"That’s great\"}"));
+
+        assertThat(answerRequest.getSum()).isEqualTo(correctSum);
+        assertThat(answerRequest.getQuestionId()).isEqualTo(questionResponse.getQuestionId());
+        assertThat(answerRequest.getQuestion()).isEqualTo(questionResponse.getQuestion());
     }
 
     @Test

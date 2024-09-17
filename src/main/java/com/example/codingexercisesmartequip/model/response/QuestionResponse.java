@@ -17,6 +17,5 @@ public class QuestionResponse {
     @Builder.Default
     private String questionId = UUID.randomUUID().toString();
     private String question;
-    @JsonIgnore
     private List<Integer> numbers;
 }

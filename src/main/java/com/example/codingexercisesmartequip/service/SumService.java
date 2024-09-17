@@ -1,7 +1,7 @@
 package com.example.codingexercisesmartequip.service;
 import com.example.codingexercisesmartequip.exception.InvalidSumException;
 import com.example.codingexercisesmartequip.model.request.AnswerRequest;
-import com.example.codingexercisesmartequip.model.response.AnswerResponseDTO;
+import com.example.codingexercisesmartequip.dto.AnswerResponseDTO;
 import com.example.codingexercisesmartequip.model.response.QuestionResponse;
 import com.example.codingexercisesmartequip.util.ValidatorUtil;
 import org.springframework.stereotype.Service;

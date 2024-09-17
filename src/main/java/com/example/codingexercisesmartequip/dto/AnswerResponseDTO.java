@@ -1,4 +1,4 @@
-package com.example.codingexercisesmartequip.model.response;
+package com.example.codingexercisesmartequip.dto;
 
 public class AnswerResponseDTO {
 
