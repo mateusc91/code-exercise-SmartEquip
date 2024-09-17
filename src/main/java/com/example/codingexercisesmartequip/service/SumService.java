@@ -41,11 +41,17 @@ public class SumService {
                 .collect(Collectors.joining(", "));
     }
 
-    public AnswerResponseDTO validateSumCalculation(AnswerRequest answerRequest) {
+    public AnswerResponseDTO buildAnswerSumCalculation(AnswerRequest answerRequest) {
         QuestionResponse storedQuestion = questionStored.get(answerRequest.getQuestionId());
-        if (!ValidatorUtil.isCorrectAnswer(storedQuestion, answerRequest)) {
-            throw new InvalidSumException("Invalid sum provided for the question");
+
+        if (storedQuestion == null || !storedQuestion.getQuestion().equals(answerRequest.getQuestion())) {
+            throw new InvalidSumException("The provided question does not match the original question.");
         }
+
+        if (!ValidatorUtil.isCorrectAnswer(storedQuestion, answerRequest)) {
+            throw new InvalidSumException("Invalid sum provided for the question.");
+        }
+
         return new AnswerResponseDTO("That’s great");
     }
 }

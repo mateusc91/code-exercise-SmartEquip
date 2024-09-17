@@ -12,8 +12,6 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
-import java.util.List;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -76,6 +74,6 @@ class SumControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(answerRequest)))
                 .andExpect(status().isBadRequest())
-                .andExpect(content().json("{\"message\":\"Invalid sum provided for the question\"}"));
+                .andExpect(content().json("{\"message\":\"Invalid sum provided for the question.\"}"));
     }
 }

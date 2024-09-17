@@ -8,11 +8,8 @@ public class ValidatorUtil {
         if (questionResponse == null) {
             return false;
         }
-
-        // Calculate the correct sum
         int correctSum = questionResponse.getNumbers().stream().mapToInt(Integer::intValue).sum();
 
-        // Check if the provided sum matches the correct sum
         return answerRequest.getSum() == correctSum;
     }
 }

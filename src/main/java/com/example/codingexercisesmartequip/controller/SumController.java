@@ -28,7 +28,7 @@ public class SumController {
 
     @Operation(summary = "Submit an answer to a previously generated sum question")
     @PostMapping
-    public ResponseEntity<AnswerResponseDTO> submitAnswer(@RequestBody AnswerRequest answerRequest) {
-        return ResponseEntity.ok(sumService.validateSumCalculation(answerRequest));
+    public ResponseEntity<AnswerResponseDTO> generateSumAnswer(@RequestBody AnswerRequest answerRequest) {
+        return ResponseEntity.ok(sumService.buildAnswerSumCalculation(answerRequest));
     }
 }
