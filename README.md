@@ -42,3 +42,6 @@ You can use the following shell script to run the application on MacOS:
 mvn clean install
 mvn spring-boot:run
 ```
+
+# Swagger
+http://localhost:8081/swagger-ui/index.html#/
