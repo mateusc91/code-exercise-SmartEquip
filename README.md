@@ -14,3 +14,31 @@ If the sum is incorrect or the request is invalid, the server returns a 400 Bad 
 - Spring Boot version: 3.3
 - Build tool: Maven
 - Test Framework: JUnit 5, Spring Boot Test
+
+# Setup and Running the Application
+
+Build the project: Use Maven to build the project:
+
+```bash
+  mvn clean install
+```
+
+Run the application: Use Maven to start the Spring Boot application:
+
+```bash
+mvn spring-boot:run
+```
+
+Running on a different port: By default, the application runs on port 8080. To change the port, modify the application.properties file:
+properties
+```bash
+server.port=8081
+```
+MacOS Script
+You can use the following shell script to run the application on MacOS:
+
+```bash
+#!/bin/bash
+mvn clean install
+mvn spring-boot:run
+```
