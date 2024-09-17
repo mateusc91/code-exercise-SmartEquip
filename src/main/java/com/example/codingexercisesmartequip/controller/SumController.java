@@ -2,6 +2,7 @@ package com.example.codingexercisesmartequip.controller;
 
 import com.example.codingexercisesmartequip.exception.InvalidSumException;
 import com.example.codingexercisesmartequip.model.request.AnswerRequest;
+import com.example.codingexercisesmartequip.model.response.AnswerResponseDTO;
 import com.example.codingexercisesmartequip.model.response.QuestionResponse;
 import com.example.codingexercisesmartequip.service.SumService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -26,15 +27,13 @@ public class SumController {
 
     @Operation(summary = "Generate a sum question with random numbers")
     @GetMapping
-    public ResponseEntity<QuestionResponse> getQuestion() {
-        return ResponseEntity.ok(sumService.generateQuestion());
+    public ResponseEntity<QuestionResponse> generateSumQuestion() {
+        return ResponseEntity.ok(sumService.buildQuestion());
     }
 
     @Operation(summary = "Submit an answer to a previously generated sum question")
     @PostMapping
-    public ResponseEntity<String> submitAnswer(@RequestBody AnswerRequest answerRequest) {
-        // The service handles the answer validation
-        sumService.validateAnswer(answerRequest);
-        return ResponseEntity.ok("That’s great");
+    public ResponseEntity<AnswerResponseDTO> submitAnswer(@RequestBody AnswerRequest answerRequest) {
+        return ResponseEntity.ok(sumService.validateSumCalculation(answerRequest));
     }
 }
