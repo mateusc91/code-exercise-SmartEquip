@@ -1,7 +1,7 @@
 package com.example.codingexercisesmartequip;
 
-import com.example.codingexercisesmartequip.model.AnswerRequest;
-import com.example.codingexercisesmartequip.model.QuestionResponse;
+import com.example.codingexercisesmartequip.model.request.AnswerRequest;
+import com.example.codingexercisesmartequip.model.response.QuestionResponse;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;

@@ -1,4 +1,4 @@
-package com.example.codingexercisesmartequip.model;
+package com.example.codingexercisesmartequip.model.request;
 
 import lombok.*;
 

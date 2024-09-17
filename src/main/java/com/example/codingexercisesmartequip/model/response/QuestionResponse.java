@@ -1,4 +1,4 @@
-package com.example.codingexercisesmartequip.model;
+package com.example.codingexercisesmartequip.model.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
