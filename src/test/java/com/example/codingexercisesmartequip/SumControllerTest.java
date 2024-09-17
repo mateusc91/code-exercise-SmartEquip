@@ -2,6 +2,8 @@ package com.example.codingexercisesmartequip;
 
 import com.example.codingexercisesmartequip.model.request.AnswerRequest;
 import com.example.codingexercisesmartequip.model.response.QuestionResponse;
+import com.example.codingexercisesmartequip.service.SumService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -23,33 +25,41 @@ class SumControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
+    @Autowired
+    private SumService sumService;
+
+    @Autowired
+    private ObjectMapper objectMapper;
+
     @Test
-    void shouldGenerateQuestion() throws Exception {
+    void shouldGenerateSumQuestion() throws Exception {
         mockMvc.perform(get("/"))
-                .andExpect(status().isOk());
-    }
-
-    @Test
-    void shouldReturnOkForCorrectAnswer() throws Exception {
-        QuestionResponse questionResponse = new QuestionResponse("1", "Please sum the numbers 5,7", List.of(5, 7));
-        AnswerRequest answerRequest = new AnswerRequest("1", "Please sum the numbers 5,7", 12);
-
-        mockMvc.perform(post("/")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content("{\"questionId\":\"1\",\"question\":\"Please sum the numbers 5,7\",\"sum\":12}"))
                 .andExpect(status().isOk())
-                .andExpect(content().string("That’s great"));
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
     }
 
     @Test
-    void shouldReturnBadRequestForIncorrectAnswer() throws Exception {
-        QuestionResponse questionResponse = new QuestionResponse("1", "Please sum the numbers 5,7", List.of(5, 7));
-        AnswerRequest answerRequest = new AnswerRequest("1", "Please sum the numbers 5,7", 10);
+    void shouldReturnOkForCorrectSumAnswer() throws Exception {
+        QuestionResponse questionResponse = sumService.buildQuestion();
+        int correctSum = questionResponse.getNumbers().stream().mapToInt(Integer::intValue).sum();
+        AnswerRequest answerRequest = new AnswerRequest(questionResponse.getQuestionId(), questionResponse.getQuestion(), correctSum);
 
         mockMvc.perform(post("/")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content("{\"questionId\":\"1\",\"question\":\"Please sum the numbers 5,7\",\"sum\":10}"))
+                        .content(objectMapper.writeValueAsString(answerRequest)))
+                .andExpect(status().isOk())
+                .andExpect(content().json("{\"message\":\"That’s great\"}"));
+    }
+
+    @Test
+    void shouldReturnBadRequestForIncorrectSumAnswer() throws Exception {
+        QuestionResponse questionResponse = sumService.buildQuestion();
+        AnswerRequest answerRequest = new AnswerRequest(questionResponse.getQuestionId(), questionResponse.getQuestion(), 999);
+
+        mockMvc.perform(post("/")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(answerRequest)))
                 .andExpect(status().isBadRequest())
-                .andExpect(content().string("That’s wrong. Please try again."));
+                .andExpect(content().json("{\"message\":\"Invalid sum provided for the question\"}"));
     }
 }

@@ -12,7 +12,7 @@ import java.util.stream.IntStream;
 
 @Service
 public class SumService {
-    private final Map<String, QuestionResponse> questionStore = new HashMap<>();
+    private final Map<String, QuestionResponse> questionStored = new HashMap<>();
 
     public QuestionResponse buildQuestion() {
         List<Integer> numbers = generateRandomNumbers();
@@ -23,7 +23,7 @@ public class SumService {
                 .numbers(numbers)
                 .build();
 
-        questionStore.put(questionResponse.getQuestionId(), questionResponse);
+        questionStored.put(questionResponse.getQuestionId(), questionResponse);
         return questionResponse;
     }
     private List<Integer> generateRandomNumbers() {
@@ -36,13 +36,13 @@ public class SumService {
                 .collect(Collectors.toList());
     }
     private String generateQuestionResponse(List<Integer> numbers) {
-        return "Please sum the numbers " + numbers.stream()
+        return "Please sum the following numbers (if only one number is generated, the sum will be its own value): " + numbers.stream()
                 .map(String::valueOf)
                 .collect(Collectors.joining(", "));
     }
 
     public AnswerResponseDTO validateSumCalculation(AnswerRequest answerRequest) {
-        QuestionResponse storedQuestion = questionStore.get(answerRequest.getQuestionId());
+        QuestionResponse storedQuestion = questionStored.get(answerRequest.getQuestionId());
         if (!ValidatorUtil.isCorrectAnswer(storedQuestion, answerRequest)) {
             throw new InvalidSumException("Invalid sum provided for the question");
         }
