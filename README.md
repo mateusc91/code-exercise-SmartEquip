@@ -30,9 +30,8 @@ mvn spring-boot:run
 ```
 
 Running on a different port: By default, the application runs on port 8080. To change the port, modify the application.properties file:
-properties
 ```bash
-server.port=8081
+server.port=8080
 ```
 MacOS Script
 You can use the following shell script to run the application on MacOS:
