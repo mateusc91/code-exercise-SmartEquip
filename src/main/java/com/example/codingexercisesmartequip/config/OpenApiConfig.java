@@ -17,9 +17,6 @@ public class OpenApiConfig {
                         .title("Sum Service API")
                         .description("API to validate sum answers from random questions.")
                         .version("v1.0")
-                        .license(new License().name("Apache 2.0").url("http://springdoc.org")))
-                .externalDocs(new ExternalDocumentation()
-                        .description("Project GitHub")
-                        .url("https://github.com/your-repo-link"));
+                        .license(new License().name("Apache 2.0").url("http://springdoc.org")));
     }
 }
